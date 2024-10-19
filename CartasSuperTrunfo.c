@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Desafio Super Trunfo - Países
 // Tema 1 - Cadastro das Cartas
@@ -50,6 +51,8 @@ void info(Carta *carta){
 
 Carta * lendo_dados(int nc){
 	Carta *carta = malloc(sizeof(Carta) * 1);
+	if (carta != NULL)
+		memset(carta, 0, sizeof(Carta));
 
 	printf("\nVoce esta inserindo a carta de numero %d\n", nc);
 
@@ -103,8 +106,8 @@ int main() {
     // Sugestão: Defina variáveis separadas para cada atributo da cidade.
     // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
     int nc = start_menu();
-    Carta **cartas = malloc(nc);
-
+    Carta **cartas = (Carta **)malloc(sizeof(Carta) * nc);
+    memset(cartas, 0, sizeof(Carta) * nc);
     // Cadastro das Cartas:
     // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
     // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
@@ -128,5 +131,8 @@ int main() {
 	    winner = comparacao(winner, cartas[1]);
     printf("\n\nCarta Vencedora -> ");
     info(winner);
+    for(int i = 0; i < nc; i++)
+	    free(cartas[i]);
+    free(cartas);
     return 0;
 }
